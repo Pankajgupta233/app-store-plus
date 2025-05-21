@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Store Plus</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>App Store Plus</h1>
+    <p>Order exclusive items for your favorite apps</p>
+  </header>
+
+  <main>
+    <section id="items">
+      <div class="item">
+        <h3>Extra Coins</h3>
+        <p>$1.99</p>
+        <button onclick="addToCart('Extra Coins', 1.99)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <h3>Premium Skin</h3>
+        <p>$4.99</p>
+        <button onclick="addToCart('Premium Skin', 4.99)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <h3>Ad-Free Upgrade</h3>
+        <p>$2.49</p>
+        <button onclick="addToCart('Ad-Free Upgrade', 2.49)">Add to Cart</button>
+      </div>
+    </section>
+
+    <section id="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p>Total: $<span id="total">0.00</span></p>
+    </section>
+
+    <section id="order">
+      <h2>Place Order</h2>
+      <form onsubmit="submitOrder(event)">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <button type="submit">Order Now</button>
+      </form>
+    </section>
+  </main>
+
+  
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  
+  header {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  #items, #cart, #order {
+    background: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  button {
+    padding: 10px 15px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #2ecc71;
+  }
+  let cart = [];
+  let total = 0;
+  
+  function addToCart(item, price) {
+    cart.push({ item, price });
+    total += price;
+    updateCart();
+  }
+  
+  function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    cart.forEach(({ item, price }) => {
+      const li = document.createElement('li');
+      li.textContent = `${item} - $${price.toFixed(2)}`;
+      cartItems.appendChild(li);
+    });
+    document.getElementById('total').textContent = total.toFixed(2);
+  }
+  
+  function submitOrder(event) {
+    event.preventDefault();
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+    alert("Thank you! Your order has been submitted.");
+    cart = [];
+    total = 0;
+    updateCart();
+    event.target.reset();
+  }
+  <script src="script.js"></script>
+</body>
+</html> 
+ 
